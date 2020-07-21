@@ -216,6 +216,20 @@ class CastingAgencyTestCase(unittest.TestCase):
         self.assertEqual(res.status_code, 404)
         self.assertEqual(data['success'], False)
         self.assertEqual(data['message'], 'Not Found!')
+
+
+
+    def test_add_association(self):
+        res = self.client().post('/association', json={
+            "actor_id": 4, 
+            "movie_id": 4
+        })
+        data = json.loads(res.data)
+
+        self.assertEqual(res.status_code, 200)
+        self.assertEqual(data['success'], True)
+
+
 # Make the tests conveniently executable
 if __name__ == "__main__":
     unittest.main()
