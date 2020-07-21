@@ -270,6 +270,14 @@ def create_app():
             abort(422)    
 
     # Error handlers
+    @app.errorhandler(AuthError)
+    def authentification_failed(error):
+        return jsonify({
+            'success': False,
+            'error': error.status_code,
+            'message': error.error['description']
+        }), 401
+
     @app.errorhandler(404)
     def not_found(error):
         return jsonify({
