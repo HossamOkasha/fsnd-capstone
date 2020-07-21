@@ -40,7 +40,7 @@ def create_app():
     # get actors
     @app.route('/actors')
     @requires_auth('get:actors')
-    def get_actors():
+    def get_actors(jwt):
         selection = Actor.query.order_by(Actor.id).all()
         current_actors = paginate_records(request, selection)
 
@@ -56,7 +56,7 @@ def create_app():
     # get movies
     @app.route('/movies')
     @requires_auth('get:movies')
-    def get_movies():
+    def get_movies(jwt):
         selection = Movie.query.order_by(Movie.id).all()
         current_movies = paginate_records(request, selection)
 
@@ -72,7 +72,7 @@ def create_app():
     # delete an actor
     @app.route('/actors/<int:actor_id>', methods=['DELETE'])
     @requires_auth('delete:actors')
-    def delete_actor(actor_id):
+    def delete_actor(jwt, actor_id):
 
         try:
             actor = Actor.query.get(actor_id)
@@ -88,7 +88,7 @@ def create_app():
     # delete a movie
     @app.route('/movies/<int:movie_id>', methods=['DELETE'])
     @requires_auth('delete:movies')
-    def delete_movie(movie_id):
+    def delete_movie(jwt, movie_id):
 
         try:
             movie = Movie.query.get(movie_id)
@@ -104,7 +104,7 @@ def create_app():
     # add an actor
     @app.route('/actors', methods=['POST'])
     @requires_auth('post:actors')
-    def add_actor():
+    def add_actor(jwt):
         body = request.get_json()
         try:
             name = body.get('name', None)
@@ -126,7 +126,7 @@ def create_app():
     # create movie
     @app.route('/movies', methods=['POST'])
     @requires_auth('post:movies')
-    def add_movie():
+    def add_movie(jwt):
         body = request.get_json()
         try:
             title = body.get('title', None)
@@ -147,7 +147,7 @@ def create_app():
     # edit a movie
     @app.route('/movies/<movie_id>', methods=['PATCH'])
     @requires_auth('patch:movies')
-    def edit_movie(movie_id):
+    def edit_movie(jwt, movie_id):
 
         movie = Movie.query.get(movie_id)
         # if not movie:
@@ -177,7 +177,7 @@ def create_app():
     # edit an actor
     @app.route('/actors/<actor_id>', methods=['PATCH'])
     @requires_auth('patch:actors')
-    def edit_actor(actor_id):
+    def edit_actor(jwt, actor_id):
 
         actor = Actor.query.get(actor_id)
         # if not actor:
@@ -208,7 +208,7 @@ def create_app():
     # get actor's movies
     @app.route('/actor/<int:actor_id>/movies')
     @requires_auth('get:movies')
-    def get_movies_from_actor(actor_id):
+    def get_movies_from_actor(jwt, actor_id):
         actor = Actor.query.get(actor_id)
 
 
@@ -227,7 +227,7 @@ def create_app():
     # get movie's actors
     @app.route('/movie/<int:movie_id>/actors')
     @requires_auth('get:actors')
-    def get_actors_from_movie(movie_id):
+    def get_actors_from_movie(jwt, movie_id):
         movie = Movie.query.get(movie_id)
 
 
@@ -247,7 +247,7 @@ def create_app():
     # add association between movies & artists
     @app.route('/association', methods=['POST'])
     @requires_auth('post:associations')
-    def create_association():
+    def create_association(jwt):
         
         body = request.get_json()
 
@@ -301,6 +301,14 @@ def create_app():
             'error': 400,
             'message': 'bad request!'
         }), 400
+
+    @app.errorhandler(401)
+    def bad_request(error):
+        return jsonify({
+            'success': False,
+            'error': 401,
+            'message': 'Unauthorized!'
+        }), 401    
 
     @app.errorhandler(422)
     def unprocessable(error):
