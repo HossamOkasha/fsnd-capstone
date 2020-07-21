@@ -3,7 +3,7 @@ from flask import Flask, request, abort, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 
-from models import setup_db, Movie, Actor
+from models import setup_db, Movie, Actor, db
 
 RECORDS_PER_PAGE = 10
 
@@ -230,8 +230,32 @@ def create_app():
             'success': True,
             'actors': current_actors,
             'current_movie': movie.title
-        })        
+        }) 
 
+
+    # add association between movies & artists
+    @app.route('/association', methods=['POST'])
+    def create_association():
+        
+        body = request.get_json()
+
+        try:
+            actor_id = body.get("actor_id", None)
+            movie_id = body.get("movie_id", None)
+            
+            movie = Movie.query.get(movie_id)
+            actor = Actor.query.get(actor_id)
+            
+            actor.movies.append(movie)
+            
+            db.session.commit()
+            
+            return jsonify({
+                'success': True
+            })
+
+        except:
+            abort(422)    
 
     # Error handlers
     @app.errorhandler(404)
