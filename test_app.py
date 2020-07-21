@@ -29,9 +29,27 @@ class CastingAgencyTestCase(unittest.TestCase):
         casting_assistant = 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Ijk1UktCWlhaRnpranphaElrLWlnZCJ9.eyJpc3MiOiJodHRwczovL2hvcy1jYXN0aW5nLWFnZW5jeS51cy5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NWYxNzRjYzhkYmY2ZmYwMDEzNWNhMTFiIiwiYXVkIjoiQWdlbmN5IiwiaWF0IjoxNTk1MzcxMDAwLCJleHAiOjE1OTU0NTc0MDAsImF6cCI6IlM0STJ6emx5U3ZXd3BvcEJCMTZpbktDRWFwMndQUjVKIiwic2NvcGUiOiIiLCJwZXJtaXNzaW9ucyI6WyJnZXQ6YWN0b3JzIiwiZ2V0Om1vdmllcyJdfQ.CTt3bzlrohc1FNN4uj1MPZnFqdfPLuekxFTgg3LtL1n5mGPSZ2OhIxEU-hdL4pHOsaRyW6nqnSNKAL9GkSdlj2hNlZFg1F8rJaALuoUbXDe71r-wUV1-0ZsCC2quVHwwdgd0taUYPiOVAKobipflotsJ3yKhV7gsOIhvWHTCbTFdMm2FtojlF4W2U1LoczV0GvWQZS_ikHw_QQqwzDW6c1V_6ryi4wYD9Z96qLgbBlOFZECLQFn5fBie4qNXArGMFbVcSuzZ7Fn3xMi7V9xlPrez5GNwzCMCp_wQgmrQ_f_UTrCxfjpmhgJbGHRmeDL4vpjFrcxMz92ldsfglBYBwg'
         executive_producer = 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Ijk1UktCWlhaRnpranphaElrLWlnZCJ9.eyJpc3MiOiJodHRwczovL2hvcy1jYXN0aW5nLWFnZW5jeS51cy5hdXRoMC5jb20vIiwic3ViIjoiZ29vZ2xlLW9hdXRoMnwxMTQ4Nzg3MzgwODkwODk1ODA0NTIiLCJhdWQiOlsiQWdlbmN5IiwiaHR0cHM6Ly9ob3MtY2FzdGluZy1hZ2VuY3kudXMuYXV0aDAuY29tL3VzZXJpbmZvIl0sImlhdCI6MTU5NTM3MTEzMCwiZXhwIjoxNTk1NDU3NTMwLCJhenAiOiJTNEkyenpseVN2V3dwb3BCQjE2aW5LQ0VhcDJ3UFI1SiIsInNjb3BlIjoib3BlbmlkIHByb2ZpbGUgZW1haWwiLCJwZXJtaXNzaW9ucyI6WyJkZWxldGU6YWN0b3JzIiwiZGVsZXRlOm1vdmllcyIsImdldDphY3RvcnMiLCJnZXQ6bW92aWVzIiwicGF0Y2g6YWN0b3JzIiwicGF0Y2g6bW92aWVzIiwicG9zdDphY3RvcnMiLCJwb3N0OmFzc29jaWF0aW9ucyIsInBvc3Q6bW92aWVzIl19.XETQyRM1ZzjIEnFqo4bswXv2mOJpXUUgWLQkJncR8kEVnOWOENTjl6_-WIWBl8y7d3GcjOQVgyUd-xD20rOOyhqe6YPLxvZeBW-PxU25rCwPQ4t5IBExz4Ggn0DQF9w3r0YJ-Cqm0-rqVIz5fTP-IvBWdiKMwpOZyMrCKRc0WxzvlHk6nAK6SGLUIO9M9P0fhZQGDM6AzpSOPUfiqRjlu6TR5kXXQ0DhpXhMx5ur_tJddpVjaLzmabs8JBdtSKGnVklguurq9K8b5YuzWJDgD9h7ot3pLdD6sC-Nw9_ezyI3bMAHEmvtYf4Mgz4J-_Rdl6Lap7I2oOMaBSlp27a-1w'
         
-        self.h_casting_director = {'Authorization': 'Bearer ' + casting_director}
-        self.h_casting_assistant = {'Authorization': 'Bearer ' + casting_assistant}
-        self.h_executive_producer = {'Authorization': 'Bearer ' + executive_producer}
+        self.h_casting_director = {
+
+            'Content-type': 'application/json',
+            'Access-Control-Allow-Origin': '*',
+            'Authorization': f'Bearer {casting_director}'
+
+        }
+        self.h_casting_assistant = {
+
+            'Content-type': 'application/json',
+            'Access-Control-Allow-Origin': '*',
+            'Authorization': f'Bearer {casting_assistant}'
+            
+        }
+        self.h_executive_producer = {
+
+            'Content-type': 'application/json',
+            'Access-Control-Allow-Origin': '*',
+            'Authorization': f'Bearer {executive_producer}'
+            
+        }
 
         # binds the app to the current context
         with self.app.app_context():
