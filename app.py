@@ -34,7 +34,7 @@ def create_app(test_config=None):
     
     @app.route('/')
     def index():
-        return 'Welcome to Casting Agency BackEnd app'
+        return 'Developed by Hossam Okasha'
 
 
     # get actors
