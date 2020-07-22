@@ -1,0 +1,1 @@
+export DATABASE_URL="postgresql://hos:zacbrand@{localhost}/{5432}"
