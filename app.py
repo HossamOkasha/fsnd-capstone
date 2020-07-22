@@ -20,7 +20,7 @@ def paginate_records(request, selection):
     return current_records
 
 
-def create_app():
+def create_app(test_config=None):
     # creating & configuring the app
     app = Flask(__name__)
     setup_db(app)
@@ -319,3 +319,8 @@ def create_app():
         }), 422
 
     return app
+
+app = create_app()
+
+if __name__ == '__main__':
+    app.run()
