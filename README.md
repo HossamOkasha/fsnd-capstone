@@ -28,8 +28,26 @@ export FLASK_APP=flaskr
 export FLASK_ENV=development
 flask run
 ```
+## Unit Testing
 
-## Testing 
+To run the tests open your terminal and run:
+
+```bash
+dropdb Agency
+createdb Agency
+```
+then insert some fake data before test you can generate some from [Mockaroo](https://www.mockaroo.com/)
+as there are three tables:
+- actors contains two main columns: name and age. 
+- movies contains two cloumns: title and release_date. 
+- association contains two cloumns: actor_id and movie_id.
+
+
+then run 
+```bash
+python test_app.py
+```
+## Testing End Points
 
 Export these variables in your terminal before testing end points.
 
