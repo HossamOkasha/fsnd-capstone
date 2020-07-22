@@ -46,7 +46,7 @@ class Actor(db.Model):
     movies = db.relationship('Movie', secondary=movies_actors,
                              backref='actors')
 
-    # add 
+    # add
     def insert(self):
         db.session.add(self)
         db.session.commit()
@@ -102,7 +102,6 @@ class Movie(db.Model):
             'release_date': self.release_date
         }
 
-    # debug 
+    # debug
     def __repr__(self):
         return f'<movie ID: {self.id}, title: {self.title}>'
-

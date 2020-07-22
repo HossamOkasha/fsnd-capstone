@@ -28,16 +28,18 @@ def create_app(test_config=None):
 
     @app.after_request
     def after_request(response):
-      response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization,true')
-      response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
-      return response  
-    
+        response.headers.add('Access-Control-Allow-Headers',
+                             'Content-Type,Authorization,true')
+        response.headers.add('Access-Control-Allow-Methods',
+                             'GET,PUT,POST,DELETE,OPTIONS')
+        return response
+
     @app.route('/')
     def index():
         return 'Developed by Hossam Okasha'
 
-
     # get actors
+
     @app.route('/actors')
     @requires_auth('get:actors')
     def get_actors(jwt):
@@ -204,18 +206,17 @@ def create_app(test_config=None):
         except:
             abort(400)
 
-   
     # get actor's movies
+
     @app.route('/actor/<int:actor_id>/movies')
     @requires_auth('get:movies')
     def get_movies_from_actor(jwt, actor_id):
         actor = Actor.query.get(actor_id)
 
-
         if not actor:
             abort(404)
 
-        movies = actor.movies    
+        movies = actor.movies
         current_movies = paginate_records(request, movies)
 
         return jsonify({
@@ -230,44 +231,43 @@ def create_app(test_config=None):
     def get_actors_from_movie(jwt, movie_id):
         movie = Movie.query.get(movie_id)
 
-
         if not movie:
             abort(404)
 
-        actors = movie.actors    
+        actors = movie.actors
         current_actors = paginate_records(request, actors)
 
         return jsonify({
             'success': True,
             'actors': current_actors,
             'current_movie': movie.title
-        }) 
-
+        })
 
     # add association between movies & artists
+
     @app.route('/association', methods=['POST'])
     @requires_auth('post:associations')
     def create_association(jwt):
-        
+
         body = request.get_json()
 
         try:
             actor_id = body.get("actor_id", None)
             movie_id = body.get("movie_id", None)
-            
+
             movie = Movie.query.get(movie_id)
             actor = Actor.query.get(actor_id)
-            
+
             actor.movies.append(movie)
-            
+
             db.session.commit()
-            
+
             return jsonify({
                 'success': True
             })
 
         except:
-            abort(422)    
+            abort(422)
 
     # Error handlers
     @app.errorhandler(AuthError)
@@ -308,7 +308,7 @@ def create_app(test_config=None):
             'success': False,
             'error': 401,
             'message': 'Unauthorized!'
-        }), 401    
+        }), 401
 
     @app.errorhandler(422)
     def unprocessable(error):
@@ -319,6 +319,7 @@ def create_app(test_config=None):
         }), 422
 
     return app
+
 
 app = create_app()
 
