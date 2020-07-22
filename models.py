@@ -4,16 +4,20 @@ from flask_sqlalchemy import SQLAlchemy
 import psycopg2
 import json
 
-database_name = "recap"
-database_path = "postgresql://{}:{}@{}/{}".format(
-    'hos', 'zacbrand', 'localhost:5432',
-    database_name)
+database_name = "Agency"
+database_url = os.environ.get('DATABASE_URL')
+
+if not database_url:
+    database_url = "postgresql://{}:{}@{}/{}".format(
+        'hos', 'zacbrand', 'localhost:5432',
+        database_name)
+
 
 db = SQLAlchemy()
 
 
-def setup_db(app, database_path=database_path):
-    app.config["SQLALCHEMY_DATABASE_URI"] = database_path
+def setup_db(app, database_path=database_url):
+    app.config["SQLALCHEMY_DATABASE_URI"] = database_url
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     db.app = app
     db.init_app(app)
