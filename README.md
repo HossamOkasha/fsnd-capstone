@@ -1,5 +1,5 @@
 # Full Stack Casting Agency API Backend
-This is a backend-api for Casting Agency as my capstone graduation project in Udacity-FSND. The Casting Agency models a company that is responsible for creating movies and managing and assigning actors to those movies. You are an Executive Producer within the company and are creating a system to simplify and streamline your process.
+This is a backend-api for Casting Agency as my capstone graduation project in Udacity-FSND. The Casting Agency models a company that is responsible for creating movies and managing and assigning actors to those movies. 
 
 ## Getting Started
 - Live version: [Casting Agency](https://casting-agency-hos-fsnd.herokuapp.com/)
